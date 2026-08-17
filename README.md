@@ -1,58 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Product Viewer
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple local web application for viewing product information.
 
-## About Laravel
+This project was built as a lightweight product viewer for local use. It does not require a login system or internet deployment. Product data is imported from an Excel file and stored in a local SQLite database.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* Import product data from an Excel file
+* Store product data in SQLite
+* Automatically merge duplicate products
+* Search products
+* Paginate product results
+* Simple and minimal interface
+* Designed for local/offline usage
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tech Stack
 
-## Learning Laravel
+* **Laravel**
+* **Laravel Excel**
+* **SQLite**
+* **Blade**
+* **Tailwind CSS**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Excel File Format
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Name         | Category | Quantity | Price |
+| ------------ | -------- | -------: | ----: |
+| Coca Cola    | Drink    |       20 |  1000 |
+| Potato Chips | Snack    |       15 |  1500 |
+| Coffee       | Drink    |       10 |  2500 |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+**Important:** The columns must be in this exact order:
 
-## Agentic Development
+`Name → Category → Quantity → Price`
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+The first row should contain the column names.
+
+## Installation
+
+Clone the repository and install the dependencies:
 
 ```bash
-composer require laravel/boost --dev
+git clone <repository-url>
+cd <project-folder>
 
-php artisan boost:install
+composer install
+npm install
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Create the environment file:
 
-## Contributing
+```bash
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Generate the application key:
 
-## Code of Conduct
+```bash
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Set SQLite as the database in `.env` if not done yet:
 
-## Security Vulnerabilities
+```env
+DB_CONNECTION=sqlite
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Create the SQLite database:
+
+```bash
+touch database/database.sqlite
+```
+
+Run the migrations:
+
+```bash
+php artisan migrate
+```
+
+Build the frontend assets:
+
+```bash
+npm run build
+```
+
+## Running the Application
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+Then open the local address shown by Laravel in your browser.
+
+For frontend development, you can also run:
+
+```bash
+npm run dev
+```
+
+## Importing Products
+
+Prepare an Excel file using the required format:
+
+```text
+Name | Category | Quantity | Price
+```
+
+Then import the file through the application's import feature.
+
+The imported data is saved into the local SQLite database. Duplicate products are merged automatically instead of creating multiple identical records.
+
+## Local Usage
+
+This application is intended specifically for local use.
+
+## Project Purpose
+
+This project was created as a small practical Laravel project to build a simple product viewing system in a short amount of time.
+
+The main focus was on:
+
+* Excel data importing
+* Database storage
+* Duplicate data handling
+* Product searching
+* Pagination
+* Building a simple Laravel interface
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is for personal/local use.
