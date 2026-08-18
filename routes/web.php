@@ -3,8 +3,10 @@
 use App\Imports\ProductsImport;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
+
 
 Route::get('/', function (Request $request) {
     $categories = Product::whereNotNull('category')
@@ -20,6 +22,11 @@ Route::get('/', function (Request $request) {
     else $products = Product::paginate(10);
 
     return view('productManagement', ['products' => $products, 'categories' => $categories]);
+});
+
+Route::delete('/products/delete', function() {
+    Artisan::call('migrate:fresh');
+    return redirect('/')->with('success', 'All products data have been cleared!');
 });
 
 Route::post('/products/import', function(Request $request) {
