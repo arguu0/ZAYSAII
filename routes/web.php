@@ -128,20 +128,20 @@ Route::put('/products/{id}', function (Request $request, int $id) {
 });
 
 
+// ─── Clear All ────────────────────────────────────────────────────────────────
+Route::delete('/products/delete', function () {
+    Product::query()->delete();
+    return redirect('/')->with('success', 'ကုန်ပစ္စည်းအားလုံး ဖျက်ပြီးပါပြီ။');
+});
+
+
 // ─── Delete Single ────────────────────────────────────────────────────────────
 Route::delete('/products/{id}', function (int $id) {
     $product = Product::findOrFail($id);
     $product->delete();
 
     return redirect('/')->with('success', 'ကုန်ပစ္စည်း အောင်မြင်စွာ ဖျက်ပြီးပါပြီ။');
-});
-
-
-// ─── Clear All ────────────────────────────────────────────────────────────────
-Route::delete('/products/delete', function () {
-    Artisan::call('migrate:fresh');
-    return redirect('/')->with('success', 'ကုန်ပစ္စည်းအားလုံး ဖျက်ပြီးပါပြီ။');
-});
+})->whereNumber('id');
 
 
 // ─── Excel Import ─────────────────────────────────────────────────────────────
